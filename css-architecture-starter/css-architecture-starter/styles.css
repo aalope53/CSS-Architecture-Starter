@@ -1,0 +1,303 @@
+/*  1. LAYER ORDER */
+
+@layer reset, base, layout, components, utilities, overrides;
+
+
+/* RESET */
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+}
+
+
+/*  2. Custom properties / Design Tokens*/
+
+@layer base {
+  :root {
+    /* Colors */
+    --color-background: #fffaf2;
+    --color-surface: #ffffff;
+    --color-text: #2b2118;
+    --color-primary: #a33a20;
+    --color-primary-dark: #762813;
+    --color-border: #d7c8b8;
+
+    /* Type */
+    --font-body: Arial, Helvetica, sans-serif;
+    --font-size-base: 1rem;
+    --font-size-large: 1.25rem;
+    --font-size-heading: 2rem;
+
+    /* Spacing */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 4rem;
+
+    /* Shape */
+    --radius-small: 0.25rem;
+    --radius-medium: 0.75rem;
+    --radius-large: 1rem;
+
+    /* Focus */
+    --focus-color: #005fcc;
+    --focus-width: 3px;
+    --focus-offset: 3px;
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    color: var(--color-text);
+    background: var(--color-background);
+  }
+
+  h1,
+  h2,
+  h3 {
+    line-height: 1.2;
+  }
+
+  a {
+    color: var(--color-primary);
+  }
+
+  img,
+  svg {
+    max-width: 100%;
+  }
+
+  footer {
+    text-align: center;
+  }
+}
+
+
+/* 3. Layout */
+
+@layer layout {
+  .site-header,
+  .section,
+  .hero-content,
+  .site-footer {
+    width: min(90%, 70rem);
+    margin-inline: auto;
+  }
+
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+  }
+
+  .hero {
+    padding-block: var(--space-xl);
+  }
+
+  .section {
+    padding-block: var(--space-lg);
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(15rem, 1fr)
+    );
+    gap: var(--space-md);
+  }
+
+  .interest-form {
+    display: grid;
+    gap: var(--space-sm);
+    max-width: 35rem;
+    margin-inline: auto;
+  }
+
+  .site-footer {
+    padding-block: var(--space-lg);
+  }
+}
+
+
+/*  3. Repeated Components */
+
+@layer components {
+
+  /* Navigation component */
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .nav-list a {
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+
+  /* Button component */
+  .button {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-md);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-medium);
+    background: var(--color-primary);
+    color: white;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .button:hover {
+    background: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+  }
+
+
+  /* Card component */
+  .card {
+    padding: var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background: var(--color-surface);
+  }
+
+  .card h3 {
+    margin-top: 0;
+  }
+
+
+  /* Callout component */
+  .callout {
+    padding: var(--space-lg);
+    border-left: 5px solid var(--color-primary);
+    border-radius: var(--radius-small);
+    background: var(--color-surface);
+  }
+
+
+  /* Form component */
+  .interest-form input,
+  .interest-form select {
+    width: 100%;
+    padding: var(--space-xs);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+    font: inherit;
+  }
+
+  .interest-form label {
+    font-weight: bold;
+  }
+}
+
+
+/* 4. Utilities */
+
+@layer utilities {
+
+  /* Hides content visually while keeping it available
+     to screen readers. */
+  .visually-hidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
+  }
+
+  /* Centers text */
+  .text-center {
+    text-align: center;
+  }
+
+  /* Adds extra space above an element */
+  .margin-top-lg {
+    margin-top: var(--space-lg);
+  }
+
+  /* Prevents content from becoming too wide */
+  .max-width-text {
+    max-width: 65ch;
+  }
+}
+
+/* 5. States */
+
+@layer overrides {
+
+  /* Visible keyboard focus */
+  :focus-visible {
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: var(--focus-offset);
+  }
+
+  /* Current page navigation */
+  .nav-list a[aria-current="page"] {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+  }
+
+  /* Form state */
+  .interest-form input:invalid {
+    border-color: #b00020;
+  }
+}
+
+
+/* 6. Print Styles */
+
+@media print {
+  body {
+    background: white;
+    color: black;
+    font-size: 12pt;
+  }
+
+  .site-header nav,
+  .button,
+  .interest-form {
+    display: none;
+  }
+
+  .hero,
+  .section,
+  .site-footer {
+    padding-block: 1rem;
+  }
+
+  .card-grid {
+    display: block;
+  }
+
+  .card {
+    margin-bottom: 1rem;
+    border: 1px solid black;
+    break-inside: avoid;
+  }
+
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+}
